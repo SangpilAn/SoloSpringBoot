@@ -1,8 +1,14 @@
 package com.example.testproject01.test.controller;
 
+import com.example.testproject01.test.vo.TestVo;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class TestController {
@@ -18,6 +24,27 @@ public class TestController {
     public String valueTest(){
         String value = "테스트 String";
         return value;
+    }
+
+    @RequestMapping("/test")
+    public ModelAndView test() throws Exception{
+        ModelAndView mav = new ModelAndView("test");
+        mav.addObject("name", "feele");
+
+        List<String> testList = new ArrayList<>();
+        testList.add("a");
+        testList.add("b");
+        testList.add("c");
+
+        mav.addObject("list", testList);
+        return mav;
+    }
+
+    @RequestMapping("/thymeleafTest")
+    public String thymeleafTest(Model model){
+        TestVo testModel = new TestVo("feele", "상필");
+        model.addAttribute("testModel", testModel);
+        return "thymeleaf/thymeleafTest";
     }
 
 }
