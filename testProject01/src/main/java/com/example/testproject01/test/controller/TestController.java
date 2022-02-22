@@ -1,6 +1,8 @@
 package com.example.testproject01.test.controller;
 
+import com.example.testproject01.test.service.TestService;
 import com.example.testproject01.test.vo.TestVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +28,7 @@ public class TestController {
         return value;
     }
 
-    @RequestMapping("/test")
+    /*@RequestMapping("/test")
     public ModelAndView test() throws Exception{
         ModelAndView mav = new ModelAndView("test");
         mav.addObject("name", "feele");
@@ -38,13 +40,26 @@ public class TestController {
 
         mav.addObject("list", testList);
         return mav;
-    }
+    }*/
 
-    @RequestMapping("/thymeleafTest")
+    /*@RequestMapping("/thymeleafTest")
     public String thymeleafTest(Model model){
         TestVo testModel = new TestVo("feele", "상필");
         model.addAttribute("testModel", testModel);
         return "thymeleaf/thymeleafTest";
+    }*/
+
+    @Autowired
+    TestService testService;
+
+    @RequestMapping(value = "/test")
+    public ModelAndView test() throws Exception{
+        ModelAndView mav = new ModelAndView("test");
+
+        List<TestVo> testList = testService.selectTest();
+        mav.addObject("list", testList);
+
+        return mav;
     }
 
 }
